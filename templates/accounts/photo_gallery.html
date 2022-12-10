@@ -1,0 +1,61 @@
+{% load cache %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Image Gallery</title>
+    <meta name="description" content="Responsive Image Gallery">
+    <meta name="author" content="Tim Wells">
+
+    <style type="text/css">
+        body {
+            background-image: url("/static/images/vintage_wallpaper.jpg");
+        }
+        #gallery {
+            line-height: 0;
+            -webkit-column-count: 5; /* split it into 5 columns */
+            -webkit-column-gap: 5px; /* give it a 5px gap between columns */
+            -moz-column-count: 5;
+            -moz-column-gap: 5px;
+            column-count: 5;
+            column-gap: 5px;
+        }
+
+        #gallery img {
+            width: 100% !important;
+            height: auto !important;
+            margin-bottom: 5px; /* to match column gap */
+            filter: grayscale(100%);
+            transition: filter 2s;
+
+        }
+
+        #gallery img:hover {
+            filter: none;
+        }
+
+
+        .user-link {
+            text-decoration: none;
+            font-size: 60px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+{% if request.user == user %}<h1 style="font-size: 50px"><a href="{% url 'photo add' %}" style="font-size: 80px; text-decoration: none; color: crimson; font-weight: 900">+</a>{% endif %}
+    <strong style=" font-size: 50px"><a class="user-link" href="{% url 'profile details' user.pk %}">{{ user }}</a>'s Photo Gallery</strong>
+</h1>
+
+<div id="gallery">
+
+    {% for photo in user_photos %}
+        {% cache 300 'image' %}<a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img"></a>{% endcache %}
+    {% endfor %}
+</div>
+
+</body>
+</html>

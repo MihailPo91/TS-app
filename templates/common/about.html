@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+        }
+
+        .about-section {
+            padding: 50px;
+            text-align: center;
+            background-color: #474e5d;
+            color: white;
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+        .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .title {
+            color: grey;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        @media screen and (max-width: 650px) {
+            .column {
+                width: 100%;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="about-section">
+    <h1>About Me</h1>
+    <p>About me:</p>
+    <p>My name is Mihail and I am learning to become a software engineer.
+        My main focus right now is advancing my skills with python and Django and getting better at creating the
+        back-end part for web applications.
+        My goal with this project is finishing final exam in the Web Framework module with python in SoftUni. Do mind
+        it's a work in progress and it should not be taken as a finished product.
+        I will use this project to implement every single skill I learn and test it in a pre-production environment. I
+        am motivated to complete it and release it as s finished product,
+        but only when I am sure it's 100 percent bug free and working flawlessly.
+    </p>
+    <p>About TripShare:</p>
+    <p>TripShare is a web application built with the sole purpose of testing my coding skills with Django and
+        Python. I love travelling and exploring new places and therefore a travel photo sharing application seemed like
+        a good choice for a start.
+        The platform is the result of my ideas and the skills that I recently learned as a soon-to-be python developer.
+        If you have any suggestions regarding the application or if you just want to ask me something, please don't
+        hesitate to use the contact form and get in touch.
+    </p>
+
+</div>
+
+<div class="row">
+    <div class="column">
+        <div class="card">
+            <img src="/static/images/my_pic1.jpg" alt="Jane" style="width:100%">
+            <div class="container">
+                <h2>Mihail Polimenov</h2>
+                <p class="title">Project Creator and Back-end Developer</p>
+                <p>Learning for a python developer in SoftUni</p>
+                <p>mistpolimen91@gmail.com</p>
+                <p>
+                    <button class="button">Contact</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <img src="/static/images/my_pic2.jpg" alt="Jane" style="width:100%">
+                <div class="container">
+                    <h2>Also me but let's pretend its another guy</h2>
+                    <p class="title">Travel Advisor</p>
+                    <p>Passionate traveller and explorer</p>
+                    <p>mistpolimen91@gmail.com</p>
+                    <p>
+                        <button class="button">Contact</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="card">
+                    <img src="/static/images/my_pic3.jpg" alt="Jane" style="width:100%">
+                    <div class="container">
+                        <h2>You guessed it, has to look like a team</h2>
+                        <p class="title">Front-end Designer</p>
+                        <p>He is the weakest link, but we have to tolerate him</p>
+                        <p>mistpolimen91@gmail.com</p>
+                        <p>
+                            <button class="button">Contact</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div style="font-size: 40px; padding: 30px">
+            <a href="{% url 'home' %}" style=" text-decoration: none">Back to Homepage</a>&nbsp;&nbsp;&nbsp; <a href="{% url 'photo home' %}" style=" text-decoration: none">Your photo feed</a>
+        </div>
+</body>
+</html>

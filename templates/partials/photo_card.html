@@ -1,0 +1,14 @@
+<card class="photo-card">
+    <div>
+        <a href="{% url 'photo details' photo.id %}">
+            <img src="{{ photo.photo.url }}" alt="img" class="photo" id="{{ photo.id }}" width="1000" style="margin: 50px">
+        </a>
+    </div>
+
+    <div style="margin: 50px; display: block; background-color: antiquewhite">
+        <h3 style="font-size: 25px">Детайли:</h3>
+        <p>
+            {{ photo.description }}
+        </p>
+    </div>
+</card>

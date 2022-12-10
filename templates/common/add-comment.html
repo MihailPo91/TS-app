@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div style="padding: 50px" >
+        <form method="post">
+            <p style="font-size: 30px">Your comment:</p>
+            <div class="comment-field">
+                {{ form.text }}
+            </div>
+            {% csrf_token %}
+            <br>
+            <button type="submit" style="font-size: 48px; text-decoration: none;
+                           display: block; background-color: darkgray;
+                           width: 14%; height: 65px; color: black;
+                           border-style: groove; border-color: black">Comment
+            </button>
+        </form>
+    </div>
+{% endblock %}

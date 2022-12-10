@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/static/css/all_style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trip Share</title>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="{% url 'home' %}" class="logo"><span>T</span>RIP<span>S</span>HARE</a>
+    <div class="header-right">
+        {% if not request.user.is_authenticated %}
+            <a class="active" href="{% url 'login' %}">Login</a>
+            <a class="active" href="{% url 'register' %}">Register</a>
+        {% else %}
+            <a class="active" href="{% url 'profile details' request.user.pk %}">
+                {% if request.user.profile_picture %}<img src="{{ request.user.profile_picture.url }}"
+                                                          alt="prof_img"
+                                                          height="15"
+                                                          width="15"
+                                                          style="padding-right: 1px">{{ request.user }}
+                {% else %}<img src="/static/images/default_profile_pic.jpg"
+                               alt="prof_img"
+                               height="15"
+                               width="15"
+                               style="padding-right: 1px">{{ request.user }}
+                {% endif %}</a>
+            <a class="active" href="{% url 'logout' %}">Logout</a>
+
+            <a href="{% url 'photo home' %}">Photos</a>
+            <a href="{% url 'landmark home' %}">Landmarks</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'about' %}">Contact</a>
+        {% endif %}
+    </div>
+</div>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <div class="footer-content">
+        <h3>Trip Share</h3>
+        <p>Trip Share is a photo sharing app with a travel theme. You know what they say, the completed trip is the
+            shared trip.</p>
+
+    </div>
+    <div class="footer-bottom">
+        <p>copyright © <a href="#">Trip Share</a> Owned and made by Mihail Polimenov to serve as a final exam at SoftUni
+            Web Framework module</p>
+        <div class="footer-menu">
+            <ul class="f-menu">
+                <li><a href="">Back to top</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="">Contacts</a></li>
+            </ul>
+        </div>
+    </div>
+
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+

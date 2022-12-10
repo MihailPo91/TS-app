@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+    <title>Add Photo</title>
+</head>
+<body>
+<div class="d-flex align-items-center light-blue-gradient" style="height: 100vh;">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card rounded-0 shadow">
+                    <div class="card-body">
+                        <h3 style="padding-left: 20%">Upload photo</h3>
+                        <br>
+                        <form method="post" style="padding-left: 20%" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Image</label>
+                                <br>
+                                {{ form.photo }}
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Location</label>
+                                <br>
+                                {{ form.location }}
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Landmark</label>
+                                <br>
+                                {{ form.landmark }}
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Description</label>
+                                <br>
+                                {{ form.description }}
+                            </div>
+                            <div>
+                                {{ form.errors }}
+                            </div>
+                            <button type="submit" class="btn btn-primary"
+                                    style="background-color: crimson; border-color: black">Create
+                            </button>
+                        </form>
+                        <br>
+
+                        <p style="padding-left: 20%"><a href="{% url 'photo home' %}">Back to Photos</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+

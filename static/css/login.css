@@ -1,0 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.light-blue-gradient {
+  /*background: linear-gradient(120deg, darksalmon 0%, coral 100%);*/
+  background-image: url("/static/images/background.jpg");
+}

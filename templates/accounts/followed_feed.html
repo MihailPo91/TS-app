@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <div style="padding-left: 25%; padding-top: 30px; padding-bottom: 30px">
+        <h1 style="font-size: 80px"><strong><i>Your Followed Feed</i></strong></h1>
+    </div>
+    <div style="padding-left: 45px">
+        <a href="{% url 'photo home' %}"
+           style="font-size: 60px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">All Posts</a>
+    </div>
+
+    {% for photo in photos %}
+
+        <div class="picture-holder" style="padding-left: 350px">
+            <a href="{% url 'profile details' photo.owner.pk %}"
+               style="text-decoration: none; color: crimson">
+                {% if photo.owner.profile_picture %}
+                    <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="40" height="40">
+                {% else %}
+                    <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="40" height="40">
+                {% endif %}
+                <strong style="font-size: 40px">{{ photo.owner.username }}</strong></a>
+            <strong style="padding-left: 200px; font-size: 40px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">{{ photo.location }}</strong>
+
+            <p style="padding-top: 20px; padding-bottom: 20px"><i>{{ photo.date_time_of_publication }}</i>
+            </p>
+
+            <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3"
+                                                              style="height: 700px; width: 1000px; border-style: groove; border-color: black"
+                                                              id="{{ photo.id }}"></a>
+            <br><br>
+            <p style="font-size: 30px">{% if photo.id not in all_liked_photos_by_request_user %}
+                <a href="{% url 'like' photo.id %}"><img src="/static/images/like.png" alt="like_btn"
+                                                         width="50" height="50"></a>
+            {% else %}
+                <a href="{% url 'like' photo.id %}"><img src="/static/images/dislike.png" alt="like_btn"
+                                                         width="50" height="50"></a>
+            {% endif %} Likes:{{ photo.like_set.count }}
+                <br>
+
+            <div class="comment-section">
+                <ul>
+                    {% for comment in photo.comment_set.all|slice:2 %}
+                        <li style="font-size: 30px; display: block; padding: 10px">
+                            <a href="{% url 'profile details' comment.user.pk %}"
+                               style="text-decoration: none; color: crimson">
+                                {% if comment.user.profile_picture %}
+                                    <img src="{{ comment.user.profile_picture.url }}" alt="prof_img" width="40"
+                                         height="40">
+                                {% else %}
+                                    <img src="/static/images/default_profile_pic.jpg" alt="prof_img"
+                                         width="40"
+                                         height="40">
+                                {% endif %}
+                                <strong style="font-size: 40px">{{ comment.user.username }}</strong></a> {{ comment.text }}
+                            <p style="font-size: 12px">{{ comment.date_time_of_publication }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <p><a href="{% url 'photo details' photo.pk %}#comments">See all comments</a></p>
+            <form method="post" action="{% url 'add comment' photo.id %}">
+                {% csrf_token %}
+                {{ comment_form.text }}
+                <br>
+                <button type="submit" style="width: 100px">Comment</button>
+            </form>
+            <br>
+        </div>
+        <hr>
+        <hr>
+    {% endfor %}
+    <button onclick="topFunction()" id="myBtn" title="Go to top" style="display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: red; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+--button-hover-bg: #555">^
+    </button>
+    <script>
+        let mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+
+    </script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="main card" style="padding: 30px">
+        <h1>{{ landmark.name }} {% if perms.landmarks.change_landmark %}
+            <a href="{% url 'landmark edit' landmark.pk %}"><img src="/static/images/edit.png" alt="edit" width="50"
+                                                                 height="50"></a>{% endif %}</h1>
+        <small>{{ landmark.date_time_added }}</small>
+        <br><br><br>
+        <p><a href="{{ landmark.location }}"
+              style="font-size: 35px; text-decoration: none; color: crimson; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">Show
+            location on Google Maps</a></p><br><br>
+
+
+        <div>
+            <img src="{{ landmark.main_photo.url }}" alt="main_img">
+        </div>
+        <div style="padding-top: 20px">
+            {% if request.user in landmark.visited_by.all %}
+                <div class="col-sm-12" id="tag">
+                    <a class="btn btn-info " target="__blank"
+                       style="font-size: 40px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                       href="{% url 'tag' landmark.pk %}">Unmark Visited</a>
+                </div>
+            {% else %}
+                <div class="col-sm-12" id="tag">
+                    <a class="btn btn-info " target="__blank"
+                       style="font-size: 40px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                       href="{% url 'tag' landmark.pk %}">Mark Visited</a>
+                </div>
+            {% endif %}
+            <p style="font-size: 50px">
+                {% if average_rating %}<strong>Rating: <i style="color: crimson">{{ average_rating|floatformat:1 }}</i> / 10</strong>{% else %}Rating:
+                    No rating{% endif %}
+                <br>
+                {% if your_rating %}
+                    <strong>Your rating: <i style="color: crimson">{{ your_rating }}</i> / 10</strong>
+                {% else %}
+                    <strong>Your rating: No rating</strong>
+                {% endif %}
+            </p>
+
+            <p style="font-size: 50px">
+
+        </div>
+        <br>
+        <div>
+            <p style="font-size: 30px" id="description"><strong>Description</strong></p>
+            <p>{{ landmark.description }}</p>
+        </div>
+        <br>
+        <div>
+            <p style="font-size: 30px"><strong>Visitors:</strong> {{ landmark.visited_by.all.count }}</p>
+            <br>
+            <p style="font-size: 30px; color: crimson"><strong>Reviews</strong></p>
+            {% for rating in all_ratings %}
+
+                <div style="padding: 20px; border-style: groove; border-color: burlywood; width: 40%; background-color: beige">
+                    <p>{% if rating.user.profile_picture %}
+                        <img src="{{ rating.user.profile_picture.url }}" alt="prof_img" width="35" height="35">
+                    {% else %}
+                        <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="35" height="35">
+                    {% endif %}
+                        <i><a href="{% url 'profile details' rating.user.pk %}"
+                              style="text-decoration: none; font-size: 30px; color: crimson">{{ rating.user }}</a></i>&nbsp;&nbsp;&nbsp;<strong
+                                style="font-size: 30px">{{ rating.rating }} / 10</strong></p>
+                    <small>{{ rating.date_created }}</small>
+                    <br><br>
+                    <p>{{ rating.comment }}</p>
+                </div>
+                <br>
+            {% endfor %}
+            <div>
+                <a href="{% url 'add rating' landmark.pk %}"
+                   style="text-decoration: none;
+                                                        color: crimson;
+                                                        font-size: 50px"><strong><i>{% if your_rating %}Edit Your
+                    Review{% else %}Leave a Review{% endif %}</i></strong></a>
+            </div>
+
+        </div>
+    </div>
+    <div>
+        <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong></p>
+        {% for photo in landmark.photo_set.all %}
+            <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="l-img"
+                                                              style="height: 450px; width: 550px; padding: 20px"></a>
+        {% endfor %}
+    </div>
+{% endblock %}
