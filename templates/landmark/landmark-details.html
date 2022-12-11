@@ -13,7 +13,7 @@
 
 
         <div>
-            <img src="{{ landmark.main_photo.url }}" alt="main_img">
+            <img src="{{ landmark.main_photo.url }}" alt="main_img" width="1200" height="900">
         </div>
         <div style="padding-top: 20px">
             {% if request.user in landmark.visited_by.all %}
