@@ -8,7 +8,6 @@ from TripShareProject.errors import error_404, error_500, error_403
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('TripShareProject.accounts.urls')),
-    path('articles/', include('TripShareProject.articles.urls')),
     path('', include('TripShareProject.common.urls')),
     path('landmarks/', include('TripShareProject.landmarks.urls')),
     path('photos/', include('TripShareProject.photos.urls')),

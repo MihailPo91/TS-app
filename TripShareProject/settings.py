@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'TripShareProject.common',
     'TripShareProject.photos',
     'TripShareProject.landmarks',
-    'TripShareProject.articles',
 
     'cloudinary'
 ]
