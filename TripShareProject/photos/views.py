@@ -59,7 +59,7 @@ class FollowedContentView(LoginRequiredMixin, views.ListView):
         return queryset
 
 
-class PictureDetailsView(LoginRequiredMixin, views.DetailView):
+class PhotoDetailsView(LoginRequiredMixin, views.DetailView):
     model = Photo
     template_name = 'photos/photo-details.html'
     context_object_name = 'photo'
@@ -69,6 +69,7 @@ class PictureDetailsView(LoginRequiredMixin, views.DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = comment_form
         context['likes'] = [like.user_id for like in self.object.like_set.all()]
+        context['owner_photos'] = Photo.objects.filter(owner__exact=self.object.owner).order_by('-date_time_of_publication').exclude(id=self.object.id)
         return context
 
 

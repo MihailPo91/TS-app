@@ -76,4 +76,11 @@
         <br>
         <button type="submit" style="width: 100px">Comment</button>
     </form>
+
+    <div>
+        <h2>Other photos by {{ photo.owner }}</h2>
+        {% for photo in owner_photos %}
+            <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3" width="500" height="400" style="padding: 10px"></a>
+        {% endfor %}
+    </div>
 {% endblock %}

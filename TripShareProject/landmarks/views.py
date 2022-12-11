@@ -5,7 +5,7 @@ from django.views import generic as views
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from TripShareProject.common.models import Rating
-from TripShareProject.landmarks.forms import LandmarkCreateForm, LandmarkEditForm
+from TripShareProject.landmarks.forms import LandmarkCreateForm, LandmarkEditForm, SearchForm
 from TripShareProject.landmarks.models import Landmark
 
 UserModel = get_user_model()
@@ -16,10 +16,20 @@ class LandmarksHomeFeed(LoginRequiredMixin, views.ListView):
     template_name = 'landmark/landmark-home-feed.html'
     context_object_name = 'landmark_list'
     paginate_by = 5
+    form_class = SearchForm
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('date_time_added')
+        form = self.form_class(self.request.GET)
+        if form.is_valid():
+            return Landmark.objects.filter(name__icontains=form.cleaned_data['query'])
         return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = SearchForm()
+        context['search_form'] = form
+        return context
 
 
 class LandmarkDetailsView(LoginRequiredMixin, views.DetailView):

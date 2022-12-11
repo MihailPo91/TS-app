@@ -30,7 +30,9 @@
                 </div>
             {% endif %}
             <p style="font-size: 50px">
-                {% if average_rating %}<strong>Rating: <i style="color: crimson">{{ average_rating|floatformat:1 }}</i> / 10</strong>{% else %}Rating:
+                {% if average_rating %}
+                    <strong>Rating: <i style="color: crimson">{{ average_rating|floatformat:1 }}</i> /
+                        10</strong>{% else %}Rating:
                     No rating{% endif %}
                 <br>
                 {% if your_rating %}
@@ -44,7 +46,7 @@
 
         </div>
         <br>
-        <div>
+        <div style="width: 75%">
             <p style="font-size: 30px" id="description"><strong>Description</strong></p>
             <p>{{ landmark.description }}</p>
         </div>
@@ -80,11 +82,13 @@
 
         </div>
     </div>
-    <div>
-        <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong></p>
-        {% for photo in landmark.photo_set.all %}
-            <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="l-img"
-                                                              style="height: 450px; width: 550px; padding: 20px"></a>
-        {% endfor %}
-    </div>
+    {% if landmark.photo_set.count > 0 %}
+        <div>
+            <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong></p>
+            {% for photo in landmark.photo_set.all %}
+                <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="l-img"
+                                                                  style="height: 450px; width: 550px; padding: 20px"></a>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -19,3 +19,11 @@ class LandmarkEditForm(LandmarkCreateForm):
         widgets = {
             'description': forms.Textarea()
         }
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Search for a landmark...'
+        })
+    )
