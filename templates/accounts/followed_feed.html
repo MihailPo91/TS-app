@@ -5,14 +5,10 @@
     <div style="padding-left: 25%; padding-top: 30px; padding-bottom: 30px">
         <h1 style="font-size: 80px"><strong><i>Your Followed Feed</i></strong></h1>
     </div>
-    <div style="padding-left: 45px">
-        <a href="{% url 'photo home' %}"
-           style="font-size: 60px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">All Posts</a>
-    </div>
 
     {% for photo in photos %}
 
-        <div class="picture-holder" style="padding-left: 350px">
+        <div class="picture-holder" style="padding-left: 350px" id="photo-post">
             <a href="{% url 'profile details' photo.owner.pk %}"
                style="text-decoration: none; color: crimson">
                 {% if photo.owner.profile_picture %}

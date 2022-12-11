@@ -20,18 +20,23 @@
                             <h4><strong><i>{{ object.username }}</i></strong></h4>
 
                         </div>
+
                         <p style="padding: 10px; text-decoration: none; font-size: 20px">
                             <strong>Total Likes: </strong>
                             <strong style="font-size: 30px">{{ total_likes }}</strong>
                         </p>
-                        <p style="padding: 10px">{% if request.user in object.followed_by.all or request.user == user%}<a
-                                href="{% url 'show followers' object.pk %}"
-                                style="text-decoration: none; font-size: 20px"><strong>Followed by: </strong></a>{% else %}<strong>Followed by: </strong>{% endif %}<strong
+                        <p style="padding: 10px">{% if request.user in object.followed_by.all or request.user == user %}
+                            <a
+                                    href="{% url 'show followers' object.pk %}"
+                                    style="text-decoration: none; font-size: 20px"><strong>Followed
+                                by: </strong></a>{% else %}<strong>Followed by: </strong>{% endif %}<strong
                                 style="font-size: 30px">{{ object.followed_by.count }}</strong>
                         </p>
-                        <p style="padding: 10px">{% if request.user in object.followed_by.all or request.user == user%}<a
-                                href="{% url 'show following' object.pk %}"
-                                style="text-decoration: none; font-size: 20px"><strong>Follows: </strong></a>{% else %}<strong>Follows: </strong>{% endif %}<strong
+                        <p style="padding: 10px">{% if request.user in object.followed_by.all or request.user == user %}
+                            <a
+                                    href="{% url 'show following' object.pk %}"
+                                    style="text-decoration: none; font-size: 20px"><strong>Follows: </strong></a>{% else %}
+                            <strong>Follows: </strong>{% endif %}<strong
                                 style="font-size: 30px">{{ object.follows.count }}</strong>
                         </p>
                         <p style="padding: 10px; text-decoration: none; font-size: 20px">
@@ -47,120 +52,120 @@
             </div>
 
         </div>
-    {% if request.user in object.followed_by.all or request.user == user%}
-        <div class="col-md-8">
+        {% if request.user in object.followed_by.all or request.user == user %}
+            <div class="col-md-8">
             <div class="card mb-3">
-                <div class="card-body">
-                    {% if object.first_name and object.last_name %}
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ object.get_full_name }}
-                            </div>
-                        </div>
-                        <hr>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            {{ object.email }}
-                        </div>
+            <div class="card-body">
+            {% if object.first_name and object.last_name %}
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Full Name</h6>
                     </div>
-                    <hr>
-                    {% if object.age %}
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Age</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ object.age }}
-                            </div>
-                        </div>
-                        <hr>
-                    {% endif %}
-                    {% if object.bio %}
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0" style="font-size: 20px">Bio:</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ object.bio }}
-                            </div>
-                        </div>
-                    {% endif %}
-    {% endif %}
-                    <hr>
-                    <hr>
-                    <hr>
-                    {% if request.user == object %}
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a
-                                        style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                                        href="{% url 'profile gallery' object.pk %}">Photo Gallery</a>
-                            </div>
-                            <div class="col-sm-12">
-                                <a
-                                        style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                                        href="{% url 'profile edit' object.pk %}">Edit Profile</a>
-                            </div>
-                            <div class="col-sm-12">
-                                <a
-                                        style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                                        href="{% url 'profile delete' object.pk %}">Delete Profile</a>
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if request.user in object.followed_by.all %}
-                        <div class="col-sm-12">
-                            <a
-                                    style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                                    href="{% url 'profile gallery' object.pk %}">Photo Gallery</a>
-                        </div>
-                    {% endif %}
-                    {% if request.user != object %}
-                        {% if request.user in object.followed_by.all %}
-                            <div class="col-sm-12" id="follow">
-                                <a
-                                        style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                                        href="{% url 'follow' object.pk %}">Unfollow</a>
-                            </div>
-                        {% else %}
-                            <div class="col-sm-12" id="follow">
-                                <a
-                                        style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                                        href="{% url 'follow' object.pk %}">Follow</a>
-                            </div>
-                        {% endif %}
-                    {% endif %}
+                    <div class="col-sm-9 text-secondary">
+                        {{ object.get_full_name }}
+                    </div>
+                </div>
+                <hr>
+            {% endif %}
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Email</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{ object.email }}
                 </div>
             </div>
-            <br>
-        {% if request.user in object.followed_by.all or request.user == user%}
+            <hr>
+            {% if object.age %}
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Age</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ object.age }}
+                    </div>
+                </div>
+                <hr>
+            {% endif %}
+            {% if object.bio %}
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0" style="font-size: 20px">Bio:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ object.bio }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        <hr>
+        <hr>
+        <hr>
+        {% if request.user == object %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <a
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'profile gallery' object.pk %}">Photo Gallery</a>
+                </div>
+                <div class="col-sm-12">
+                    <a
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'profile edit' object.pk %}">Edit Profile</a>
+                </div>
+                <div class="col-sm-12">
+                    <a
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'profile delete' object.pk %}">Delete Profile</a>
+                </div>
+            </div>
+        {% endif %}
+        {% if request.user in object.followed_by.all %}
+            <div class="col-sm-12">
+                <a
+                        style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                        href="{% url 'profile gallery' object.pk %}">Photo Gallery</a>
+            </div>
+        {% endif %}
+        {% if request.user != object %}
+            {% if request.user in object.followed_by.all %}
+                <div class="col-sm-12" id="follow">
+                    <a
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'follow' object.pk %}">Unfollow</a>
+                </div>
+            {% else %}
+                <div class="col-sm-12" id="follow">
+                    <a
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'follow' object.pk %}">Follow</a>
+                </div>
+            {% endif %}
+        {% endif %}
+        </div>
+        </div>
+        <br>
+        {% if request.user in object.followed_by.all or request.user == user %}
             <button onclick="myFunction()" style="width: 35%;
             height: 30px;
   padding: 5px 0;
   background-color: crimson;
   margin-top: 5px;"><strong>Visited landmarks:</strong></button>
             <div id="myDIV">
-                <div class="landmarks_visited">
-                    {% for landmark in visited %}
-                        <div style="padding: 3px">
-                            <a style="font-size: 30px; text-decoration: none; color: crimson"
-                               href="{% url 'landmark details' landmark.pk %}"><img
-                                    src="{{ landmark.main_photo.url }}"
-                                    alt="landmark_img" width="120"
-                                    height="100">{{ landmark.name }}
-                            </a>
-                        </div>
-                    {% endfor %}
-        {% endif %}
+            <div class="landmarks_visited">
+            {% for landmark in visited %}
+                <div style="padding: 3px">
+                    <a style="font-size: 30px; text-decoration: none; color: crimson"
+                       href="{% url 'landmark details' landmark.pk %}"><img
+                            src="{{ landmark.main_photo.url }}"
+                            alt="landmark_img" width="120"
+                            height="100">{{ landmark.name }}
+                    </a>
                 </div>
-            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+        </div>
         </div>
 
 

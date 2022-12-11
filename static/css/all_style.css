@@ -51,6 +51,7 @@ body {
 .header a.active {
     background-color: firebrick;
     color: black;
+
 }
 
 .header-right {
@@ -118,7 +119,7 @@ footer {
 
 .footer-bottom {
     background: #000;
-    width: 100vw;
+    width: 100%;
     padding: 20px;
     padding-bottom: 40px;
     text-align: center;

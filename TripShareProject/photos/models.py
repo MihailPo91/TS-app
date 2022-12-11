@@ -11,6 +11,8 @@ UserModel = get_user_model()
 class Photo(models.Model):
     photo = CloudinaryField(
         'image',
+        height_field='900',
+        width_field='1200',
         null=False,
         blank=False,
     )

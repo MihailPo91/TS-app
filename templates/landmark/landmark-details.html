@@ -54,6 +54,7 @@
         <div>
             <p style="font-size: 30px"><strong>Visitors:</strong> {{ landmark.visited_by.all.count }}</p>
             <br>
+        {% if all_ratings %}
             <p style="font-size: 30px; color: crimson"><strong>Reviews</strong></p>
             {% for rating in all_ratings %}
 
@@ -72,6 +73,7 @@
                 </div>
                 <br>
             {% endfor %}
+        {% endif %}
             <div>
                 <a href="{% url 'add rating' landmark.pk %}"
                    style="text-decoration: none;
@@ -84,7 +86,7 @@
     </div>
     {% if landmark.photo_set.count > 0 %}
         <div>
-            <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong></p>
+            <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong><a href="{% url 'photo add' %}"><img src="/static/images/add.png" alt="add" height="50"></a></p>
             {% for photo in landmark.photo_set.all %}
                 <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="l-img"
                                                                   style="height: 450px; width: 550px; padding: 20px"></a>
