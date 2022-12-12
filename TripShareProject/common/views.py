@@ -1,10 +1,11 @@
+import random
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.views import generic as views
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.cache import cache_page
 
 from TripShareProject.common.forms import CommentForm, RatingForm
 from TripShareProject.common.models import Like, Rating
@@ -17,13 +18,20 @@ UserModel = get_user_model()
 # Create your views here.
 
 class ShowHomepageAsGuest(views.View):
-    def get(self, request):
-        all_photos = Photo.objects.all()
+
+    @staticmethod
+    def get(request):
+        all_photos = Photo.objects.all().order_by('-date_time_of_publication')[:8]
         profile = request.user
+        try:
+            random_photo = random.choice(Photo.objects.all())
+        except ObjectDoesNotExist:
+            random_photo = None
         if profile.id:
             context = {
                 'all_photos': all_photos,
                 'profile': profile,
+                'random_photo': random_photo
             }
         else:
             context = {

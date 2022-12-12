@@ -1,9 +1,11 @@
 {% extends 'base/base.html' %}
+{% load static %}
+{% load cache %}
 
 {% block content %}
-    <div>
+    <div style="background-image: url('/static/images/background.jpg')">
 
-            <h1 style="font-size: 200px; float: top; margin: 50px; margin-left: 300px; font-weight: 800;
+        <h1 style="font-size: 200px; float: top; margin: 50px; margin-left: 300px; font-weight: 800;
         color: black;
         font-family: ' Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace;">
             <span style="font-size: 225px;
@@ -17,7 +19,7 @@
     </div>
 
     <div>
-        <img src="/static/images/IMG_20210704_185959.jpg" alt="img2" height="1200" width="1600"
+        <img src="{% static '/images/IMG_20210704_185959.jpg' %}" alt="img2" height="1200" width="1600"
              style="padding: 30px; margin-left: 60px">
     </div>
 
@@ -58,9 +60,31 @@
         </p>
     </div>
 
+    <div style="padding: 60px">
+        <h2 style="text-align: center">Some of the latest photos our members shared:</h2>
+        {% for photo in all_photos %}
+            {% cache 300 photo.pk %}<img src="{{ photo.photo.url }}" alt="img2" width="380" height="300" style="padding: 5px">{% endcache %}
+        {% endfor %}
+    </div>
+
+    <div style="padding: 80px; font-size: 25px">
+        <p>
+            <i>
+                Yes, it's that easy to share your awesome photos and even easier to get likes and to get followed.
+                So don't hesitate! Join our growing community and start sharing. One of those photos that we shared
+                should be one of your memories. It's just that easy and fun! TripShare is for everyone who loves to
+                travel and explore new places.
+            </i>
+        </p>
+    </div>
+
     <div>
-        <img src="/static/images/IMG_20210516_105905.jpg" alt="img2" height="1200" width="1600"
-             style="padding: 30px; margin-left: 60px">
+        {% if not random_photo %}
+            {% cache 300 'img' %}<img src="/static/images/IMG_20210516_105905.jpg" alt="img2" height="1200" width="1600"
+                 style="padding: 30px; margin-left: 60px">{% endcache %}
+        {% else %}
+            <img src="{{ random_photo.photo.url }}" alt="rand_img" height="1200" width="1600" style="padding: 30px; margin-left: 60px">
+        {% endif %}
     </div>
 
     <div style="font-size: 30px">
@@ -73,7 +97,5 @@
             </i>
         </pre>
     </div>
-    <div style="padding: 30px; margin-left: 60px">
-        <img src="/static/images/ts_logo.png" alt="logo">
-    </div>
+
 {% endblock %}
