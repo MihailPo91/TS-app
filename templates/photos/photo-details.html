@@ -20,18 +20,18 @@
     <div style="padding: 50px">
         <a href="{% url 'profile details' photo.owner.pk %}" style="text-decoration: none; color: crimson">
             <p style="font-size: 40px; color: black"><strong>Posted by:</strong>
-                            {% if photo.owner.profile_picture %}
-                                <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="45" height="35">
-                            {% else %}
-                                <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="45" height="35">
-                            {% endif %}
+                {% if photo.owner.profile_picture %}
+                    <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="45" height="35">
+                {% else %}
+                    <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="45" height="35">
+                {% endif %}
                 <strong style="font-size: 40px; color: crimson">{{ photo.owner.username }}</strong></p></a>
 
         <strong style="font-size: 30px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">Location: {{ photo.location }}</strong>
     </div>
     <div>
         {% cache 300 'image' %}<img src="{{ photo.photo.url }}" alt="img"{% endcache %}
-             style="margin-left:50px; width: 900px; height: 600px">
+                                    style="margin-left:50px; width: 900px; height: 600px">
     </div>
     <div style="padding-left: 50px; padding-top: 10px">
         <p style="font-size: 30px">{% if request.user.id not in likes %}
@@ -64,8 +64,9 @@
                     {% else %}
                         <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="40" height="40">
                     {% endif %}
-                    <strong style="font-size: 40px">{{ comment.user.username }}</strong></a>&nbsp;&nbsp;&nbsp;<i style="font-size: 30px">{{ comment.text }}</i><br>
-                     <small>{{ comment.date_time_of_publication }}</small>
+                    <strong style="font-size: 40px">{{ comment.user.username }}</strong></a>&nbsp;&nbsp;&nbsp;<i
+                    style="font-size: 30px">{{ comment.text }}</i><br>
+                <small>{{ comment.date_time_of_publication }}</small>
             </div>
         {% endfor %}
 
@@ -77,10 +78,13 @@
         <button type="submit" style="width: 100px">Comment</button>
     </form>
 
-    <div>
-        <h2>Other photos by {{ photo.owner }}</h2>
-        {% for photo in owner_photos %}
-            <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3" width="500" height="400" style="padding: 10px"></a>
-        {% endfor %}
-    </div>
+    {% if owner_photos %}
+        <div>
+            <h2>Other photos by {{ photo.owner }}</h2>
+            {% for photo in owner_photos %}
+                <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3" width="500"
+                                                                  height="400" style="padding: 10px"></a>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

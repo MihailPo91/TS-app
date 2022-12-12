@@ -21,18 +21,22 @@
                     <a class="btn btn-info " target="__blank"
                        style="font-size: 40px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
                        href="{% url 'tag' landmark.pk %}">Unmark Visited</a>
+                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 30px">Visitors:</i> <strong
+                        style="font-size: 35px">{{ landmark.visited_by.count }}</strong>
                 </div>
             {% else %}
                 <div class="col-sm-12" id="tag">
                     <a class="btn btn-info " target="__blank"
                        style="font-size: 40px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
                        href="{% url 'tag' landmark.pk %}">Mark Visited</a>
+                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 30px">Visitors:</i> <strong
+                        style="font-size: 35px">{{ landmark.visited_by.count }}</strong>
                 </div>
             {% endif %}
             <p style="font-size: 50px">
                 {% if average_rating %}
                     <strong>Rating: <i style="color: crimson">{{ average_rating|floatformat:1 }}</i> /
-                        10</strong>{% else %}Rating:
+                        10</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>From </i><strong>{{ landmark.rating_set.count }}</strong><i> votes</i>{% else %}Rating:
                     No rating{% endif %}
                 <br>
                 {% if your_rating %}
@@ -54,26 +58,26 @@
         <div>
             <p style="font-size: 30px"><strong>Visitors:</strong> {{ landmark.visited_by.all.count }}</p>
             <br>
-        {% if all_ratings %}
-            <p style="font-size: 30px; color: crimson"><strong>Reviews</strong></p>
-            {% for rating in all_ratings %}
+            {% if all_ratings %}
+                <p style="font-size: 30px; color: crimson"><strong>Reviews</strong></p>
+                {% for rating in all_ratings %}
 
-                <div style="padding: 20px; border-style: groove; border-color: burlywood; width: 40%; background-color: beige">
-                    <p>{% if rating.user.profile_picture %}
-                        <img src="{{ rating.user.profile_picture.url }}" alt="prof_img" width="35" height="35">
-                    {% else %}
-                        <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="35" height="35">
-                    {% endif %}
-                        <i><a href="{% url 'profile details' rating.user.pk %}"
-                              style="text-decoration: none; font-size: 30px; color: crimson">{{ rating.user }}</a></i>&nbsp;&nbsp;&nbsp;<strong
-                                style="font-size: 30px">{{ rating.rating }} / 10</strong></p>
-                    <small>{{ rating.date_created }}</small>
-                    <br><br>
-                    <p>{{ rating.comment }}</p>
-                </div>
-                <br>
-            {% endfor %}
-        {% endif %}
+                    <div style="padding: 20px; border-style: groove; border-color: burlywood; width: 40%; background-color: beige">
+                        <p>{% if rating.user.profile_picture %}
+                            <img src="{{ rating.user.profile_picture.url }}" alt="prof_img" width="35" height="35">
+                        {% else %}
+                            <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="35" height="35">
+                        {% endif %}
+                            <i><a href="{% url 'profile details' rating.user.pk %}"
+                                  style="text-decoration: none; font-size: 30px; color: crimson">{{ rating.user }}</a></i>&nbsp;&nbsp;&nbsp;<strong
+                                    style="font-size: 30px">{{ rating.rating }} / 10</strong></p>
+                        <small>{{ rating.date_created }}</small>
+                        <br><br>
+                        <p>{{ rating.comment }}</p>
+                    </div>
+                    <br>
+                {% endfor %}
+            {% endif %}
             <div>
                 <a href="{% url 'add rating' landmark.pk %}"
                    style="text-decoration: none;
@@ -86,11 +90,14 @@
     </div>
     {% if landmark.photo_set.count > 0 %}
         <div>
-            <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong><a href="{% url 'photo add' %}"><img src="/static/images/add.png" alt="add" height="50"></a></p>
+            <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong><a href="{% url 'photo add' %}"><img
+                    src="/static/images/add.png" alt="add" height="50"></a></p>
             {% for photo in landmark.photo_set.all %}
                 <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="l-img"
                                                                   style="height: 450px; width: 550px; padding: 20px"></a>
             {% endfor %}
         </div>
+    {% else %}
+        <a href="{% url 'photo add' %}"><img src="/static/images/add.png" alt="add" height="50"></a>
     {% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@
 {% block content %}
     <div style="background-image: url('/static/images/background.jpg')">
 
-        <h1 style="font-size: 200px; float: top; margin: 50px; margin-left: 300px; font-weight: 800;
+        <a href="{% url 'about' %}" style="text-decoration: none"><h1 style="font-size: 200px; float: top; margin: 50px; margin-left: 300px; font-weight: 800;
         color: black;
         font-family: ' Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace;">
             <span style="font-size: 225px;
@@ -14,7 +14,7 @@
         color: crimson;">T</span>RIP<span style="font-size: 225px;
         font-family: 'Roboto', 'Lucida Grande', Verdana, Arial, sans-serif;
         font-weight: 1500;
-        color: crimson;">S</span>HARE </h1>
+        color: crimson;">S</span>HARE </h1></a>
 
     </div>
 
@@ -63,7 +63,7 @@
     <div style="padding: 60px">
         <h2 style="text-align: center">Some of the latest photos our members shared:</h2>
         {% for photo in all_photos %}
-            {% cache 300 photo.pk %}<img src="{{ photo.photo.url }}" alt="img2" width="380" height="300" style="padding: 5px">{% endcache %}
+            <img src="{{ photo.photo.url }}" alt="img2" width="380" height="300" style="padding: 5px">
         {% endfor %}
     </div>
 
@@ -80,8 +80,8 @@
 
     <div>
         {% if not random_photo %}
-            {% cache 300 'img' %}<img src="/static/images/IMG_20210516_105905.jpg" alt="img2" height="1200" width="1600"
-                 style="padding: 30px; margin-left: 60px">{% endcache %}
+            <img src="/static/images/IMG_20210516_105905.jpg" alt="img2" height="1200" width="1600"
+                 style="padding: 30px; margin-left: 60px">
         {% else %}
             <img src="{{ random_photo.photo.url }}" alt="rand_img" height="1200" width="1600" style="padding: 30px; margin-left: 60px">
         {% endif %}
