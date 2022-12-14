@@ -1,3 +1,4 @@
+from cloudinary.forms import CloudinaryFileField
 from django import forms
 
 from TripShareProject.photos.models import Photo

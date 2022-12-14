@@ -11,10 +11,12 @@ UserModel = get_user_model()
 class Photo(models.Model):
     photo = CloudinaryField(
         'image',
-        height_field='900',
-        width_field='1200',
         null=False,
         blank=False,
+        transformation=[
+            {'width': 1600, 'crop': "scale"},
+            {'fetch_format': "auto"}
+        ]
     )
     location = models.CharField(
         max_length=30,

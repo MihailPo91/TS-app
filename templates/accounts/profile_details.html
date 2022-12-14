@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -106,80 +107,56 @@
                 <div class="col-sm-12">
                     <a
                             style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile gallery' object.pk %}">Photo Gallery</a>
-                </div>
-                <div class="col-sm-12">
+                            href="{% url 'profile gallery' object.pk %}"><img src="{% static 'images/gallery.png' %}"
+                                                                              alt="gallery" height="100"></a>
+
                     <a
                             style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile edit' object.pk %}">Edit Profile</a>
-                </div>
-                <div class="col-sm-12">
+                            href="{% url 'profile edit' object.pk %}"><img src="{% static 'images/edit.png' %}"
+                                                                           alt="edit" height="100"></a>
+
                     <a
                             style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile delete' object.pk %}">Delete Profile</a>
+                            href="{% url 'profile delete' object.pk %}"><img src="{% static 'images/delete.png' %}"
+                                                                             alt="delete" height="100"></a>
                 </div>
             </div>
         {% endif %}
         {% if request.user in object.followed_by.all %}
             <div class="col-sm-12">
-                <a
-                        style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                        href="{% url 'profile gallery' object.pk %}">Photo Gallery</a>
+                 <a
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'profile gallery' object.pk %}"><img src="{% static 'images/gallery.png' %}"
+                                                                              alt="gallery" height="200"></a>
             </div>
         {% endif %}
         {% if request.user != object %}
             {% if request.user in object.followed_by.all %}
                 <div class="col-sm-12" id="follow">
+                    <br>
                     <a
                             style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'follow' object.pk %}">Unfollow</a>
+                            href="{% url 'follow' object.pk %}"><strong>Unfollow</strong></a>
                 </div>
             {% else %}
                 <div class="col-sm-12" id="follow">
+                    <br>
                     <a
-                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'follow' object.pk %}">Follow</a>
+                            style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                            href="{% url 'follow' object.pk %}"><strong>Follow</strong></a>
                 </div>
             {% endif %}
         {% endif %}
         </div>
         </div>
         <br>
-        {% if request.user in object.followed_by.all or request.user == user %}
-            <button onclick="myFunction()" style="width: 35%;
-            height: 30px;
-  padding: 5px 0;
-  background-color: crimson;
-  margin-top: 5px;"><strong>Visited landmarks:</strong></button>
-            <div id="myDIV">
-            <div class="landmarks_visited">
-            {% for landmark in visited %}
-                <div style="padding: 3px">
-                    <a style="font-size: 30px; text-decoration: none; color: crimson"
-                       href="{% url 'landmark details' landmark.pk %}"><img
-                            src="{{ landmark.main_photo.url }}"
-                            alt="landmark_img" width="120"
-                            height="100">{{ landmark.name }}
-                    </a>
-                </div>
-            {% endfor %}
-        {% endif %}
+
         </div>
-        </div>
-        </div>
+    </div>
+
 
 
     </div>
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myDIV");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-    </script>
 
 {% endblock %}
 

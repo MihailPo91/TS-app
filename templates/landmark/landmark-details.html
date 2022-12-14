@@ -19,7 +19,7 @@
             {% if request.user in landmark.visited_by.all %}
                 <div class="col-sm-12" id="tag">
                     <a class="btn btn-info " target="__blank"
-                       style="font-size: 40px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                       style="font-size: 40px; text-decoration: none; color: black; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
                        href="{% url 'tag' landmark.pk %}">Unmark Visited</a>
                     &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 30px">Visitors:</i> <strong
                         style="font-size: 35px">{{ landmark.visited_by.count }}</strong>
@@ -27,7 +27,7 @@
             {% else %}
                 <div class="col-sm-12" id="tag">
                     <a class="btn btn-info " target="__blank"
-                       style="font-size: 40px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
+                       style="font-size: 40px; text-decoration: none; color: black; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
                        href="{% url 'tag' landmark.pk %}">Mark Visited</a>
                     &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 30px">Visitors:</i> <strong
                         style="font-size: 35px">{{ landmark.visited_by.count }}</strong>

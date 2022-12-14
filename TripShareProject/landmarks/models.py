@@ -14,6 +14,10 @@ class Landmark(models.Model):
         'image',
         null=False,
         blank=False,
+        transformation=[
+            {'width': 1600, 'crop': "scale"},
+            {'fetch_format': "auto"}
+        ]
     )
     location = models.URLField(
         null=True,

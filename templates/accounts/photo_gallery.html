@@ -1,5 +1,3 @@
-{% load cache %}
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -53,7 +51,7 @@
 <div id="gallery">
 
     {% for photo in user_photos %}
-        {% cache 300 'image' %}<a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img"></a>{% endcache %}
+        <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img"></a>
     {% endfor %}
 </div>
 

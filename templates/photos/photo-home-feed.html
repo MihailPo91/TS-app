@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load cache %}
+
 
 {% block content %}
     <div style="padding-left: 25%; padding-top: 30px; padding-bottom: 30px">
@@ -10,7 +10,7 @@
 
         <a href="{% url 'photo add' %}" style="text-decoration: none;
         color: crimson; font-size: 60px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"><img
-                src="/static/images/add.png" alt="add" height="50"><strong>Upload Photo</strong></a>
+                src="/static/images/add.png" alt="add" height="100"></a>
     </div>
 
     <div style="padding-left: 50px">
@@ -34,9 +34,9 @@
             <p style="padding-top: 20px; padding-bottom: 20px"><i>{{ photo.date_time_of_publication }}</i>
             </p>
 
-            {% cache 600 image %}<a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3"
+            <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3"
                                                               style="height: 700px; width: 1000px; border-style: groove; border-color: black"
-                                                              id="{{ photo.id }}"></a>{% endcache %}
+                                                              id="{{ photo.id }}" loading="lazy"></a>
             <br><br>
             <p style="font-size: 30px">{% if photo.id not in all_liked_photos_by_request_user %}
                 <a href="{% url 'like' photo.id %}"><img src="/static/images/like.png" alt="like_btn"
@@ -50,7 +50,7 @@
             <div class="comment-section">
                 <ul>
                     {% for comment in photo.comment_set.all|slice:2 %}
-                        <li style="font-size: 30px; display: block; padding: 10px">
+                        <li style="font-size: 30px; display: block; padding: 10px; width: 75%">
                             <a href="{% url 'profile details' comment.user.pk %}"
                                style="text-decoration: none; color: crimson">
                                 {% if comment.user.profile_picture %}

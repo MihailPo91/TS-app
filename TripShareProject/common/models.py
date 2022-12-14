@@ -1,11 +1,10 @@
-import datetime
-
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from TripShareProject.landmarks.models import Landmark
 from TripShareProject.photos.models import Photo
+from TripShareProject.accounts.models import TripShareUser
 
 UserModel = get_user_model()
 
@@ -72,3 +71,8 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'From {self.user} to {self.landmark} --- {self.rating}'
+
+
+# class Notification(models.Model):
+#     receiver = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+#     message = models.CharField(max_length=255)

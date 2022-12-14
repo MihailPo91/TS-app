@@ -15,7 +15,7 @@ class LandmarksHomeFeed(LoginRequiredMixin, views.ListView):
     model = Landmark
     template_name = 'landmark/landmark-home-feed.html'
     context_object_name = 'landmark_list'
-    paginate_by = 5
+    paginate_by = 10
     form_class = SearchForm
 
     def get_queryset(self):

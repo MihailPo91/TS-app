@@ -38,6 +38,10 @@ class TripShareUser(AbstractUser):
         'image',
         null=True,
         blank=True,
+        transformation=[
+            {'width': 1200, 'crop': "scale"},
+            {'fetch_format': "auto"}
+        ]
     )
     bio = models.TextField(
         null=True,
