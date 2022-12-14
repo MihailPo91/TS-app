@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from django.views import generic as views
@@ -7,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from TripShareProject.common.models import Rating
 from TripShareProject.landmarks.forms import LandmarkCreateForm, LandmarkEditForm, SearchForm
 from TripShareProject.landmarks.models import Landmark
+from TripShareProject.landmarks.notifications import create_notification_for_every_user_on_landmark_creation
 
 UserModel = get_user_model()
 
@@ -64,6 +66,13 @@ class LandmarkAddView(PermissionRequiredMixin, views.CreateView):
 
     permission_required = 'landmarks.add_landmark',
     permission_denied_message = "Sorry, you don't have permission to add landmarks"
+
+    def form_valid(self, form):
+        if form.is_valid():
+            landmark = form.save(commit=False)
+            landmark.save()
+            create_notification_for_every_user_on_landmark_creation(landmark)
+            return redirect('landmark home')
 
 
 class LandmarkEditView(PermissionRequiredMixin, views.UpdateView):

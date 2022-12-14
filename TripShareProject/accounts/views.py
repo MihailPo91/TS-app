@@ -11,7 +11,7 @@ from django.views.decorators.cache import cache_page
 
 from TripShareProject import settings
 from TripShareProject.accounts.forms import RegisterForm, LoginForm, TripUserEditForm
-from TripShareProject.landmarks.models import Landmark
+from TripShareProject.common.models import Notification
 from TripShareProject.photos.models import Photo
 
 UserModel = get_user_model()
@@ -121,3 +121,13 @@ def show_user_followed_users(request, pk):
     context = {'follows': user_follows, 'user': user}
 
     return render(request, 'accounts/follows-users-list.html', context=context)
+
+
+@login_required
+def show_user_notifications(request, pk):
+    user = UserModel.objects.get(pk=pk)
+    notifications = Notification.objects.filter(receiver=user).order_by('-date_time_created')
+
+    context = {'notifications': notifications}
+
+    return render(request, 'accounts/notifications/notification-list.html', context=context)

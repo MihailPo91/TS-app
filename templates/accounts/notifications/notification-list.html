@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if notifications %}
+        <h1 style="font-size: 80px; padding-left: 30px">Your notifications:</h1>
+        <div style="padding: 30px">
+
+            {% for notification in notifications %}
+
+                {% if not notification.is_read %}
+
+                    <div style="padding: 10px; font-size: 30px; border-style: groove; border-width: 1px; width: 100%; background-color: beige"
+                         id="notification">
+                        <div><a href="{{ notification.link }}" style="text-decoration: none"><img src="{% static 'images/visit.png' %}" alt="visit" height="55"></a>
+                            <a href="{% url 'mark read' notification.pk %}"><img src="{% static 'images/accept.png' %}" alt="accept" height="40"></a>
+                            <a href="{% url 'delete notification' notification.pk %}"><img src="{% static 'images/delete.png' %}" alt="delete" height="40"></a>&nbsp;
+                            <i>{{ notification.date_time_created }}</i>
+                            <p><strong>{{ notification.message }}</strong></p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div style="padding: 10px; font-size: 30px; border-style: groove; border-width: 1px; width: 100%; background-color: darkgrey"
+                         id="notification">
+                        <div><a href="{{ notification.link }}"><img src="{% static 'images/visit.png' %}" alt="visit" height="55"></a>
+                            <a href="{% url 'delete notification' notification.pk %}"><img src="{% static 'images/delete.png' %}" alt="delete" height="40"></a>&nbsp;
+                            <i>{{ notification.date_time_created }}</i>
+                            <p style="color: dimgray"><strong>{{ notification.message }}</strong></p>
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <div style="padding: 100px">
+            <h1 style="text-align: center; font-size: 90px">No new notifications at the moment! Don't wait here, go
+                share!</h1>
+        </div>
+    {% endif %}
+{% endblock %}

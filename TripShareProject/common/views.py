@@ -2,14 +2,18 @@ import random
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.views import generic as views
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from pyperclip import copy
 
+from TripShareProject.accounts.notifications import create_notification_for_new_follow_on_user
 from TripShareProject.common.forms import CommentForm, RatingForm
-from TripShareProject.common.models import Like, Rating
+from TripShareProject.common.models import Like, Rating, Notification
+from TripShareProject.common.notifications import create_notification_for_like_on_user_photo, \
+    create_notification_for_comment_on_user_photo
 from TripShareProject.landmarks.models import Landmark
 from TripShareProject.photos.models import Photo
 
@@ -52,6 +56,7 @@ def add_comment(request, photo_id):
             comment.to_photo = photo
             comment.user = request.user
             comment.save()
+            create_notification_for_comment_on_user_photo(comment)
 
         return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')
 
@@ -66,6 +71,7 @@ def like_view(request, photo_id):
     else:
         like = Like(to_photo=photo, user=request.user)
         like.save()
+        create_notification_for_like_on_user_photo(like)
 
     return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')
 
@@ -81,6 +87,7 @@ def follow_view(request, pk):
             current_user.follows.remove(user_to_follow.id)
         else:
             current_user.follows.add(user_to_follow.id)
+            create_notification_for_new_follow_on_user(user_to_follow, current_user)
 
     return redirect('profile details', pk)
 
@@ -144,3 +151,18 @@ def add_rating(request, pk):
 
         context = {'form': form, 'is_rated_already': already_rated, 'landmark': landmark}
         return render(request, 'common/add-rating.html', context=context)
+
+
+def mark_notification_read(request, pk):
+    notification = Notification.objects.get(pk=pk)
+    if not notification.is_read:
+        notification.is_read = True
+        notification.save()
+
+    return redirect(request.META['HTTP_REFERER'] + f'#{notification.id}')
+
+
+def delete_notification(request, pk):
+    notification = Notification.objects.get(pk=pk)
+    notification.delete()
+    return redirect(request.META['HTTP_REFERER'])

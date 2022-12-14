@@ -73,6 +73,22 @@ class Rating(models.Model):
         return f'From {self.user} to {self.landmark} --- {self.rating}'
 
 
-# class Notification(models.Model):
-#     receiver = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-#     message = models.CharField(max_length=255)
+class Notification(models.Model):
+    # sender = models.ForeignKey(
+    #     UserModel,
+    #     on_delete= models.CASCADE,
+    #     null=True,
+    #     blank=True,
+    #     related_name='sent_from'
+    # )
+    receiver = models.ManyToManyField(
+        UserModel,
+        related_name='sent_to'
+    )
+    message = models.CharField(max_length=255)
+    link = models.URLField(
+        null=True,
+        blank=True,
+    )
+    is_read = models.BooleanField(default=False)
+    date_time_created = models.DateTimeField(auto_now_add=True)

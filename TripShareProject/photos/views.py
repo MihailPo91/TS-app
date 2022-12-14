@@ -10,7 +10,7 @@ from django.views.decorators.cache import cache_page
 from TripShareProject.common.forms import CommentForm
 from TripShareProject.photos.forms import PhotoCreateForm, PhotoEditForm
 from TripShareProject.photos.models import Photo
-
+from TripShareProject.photos.notifications import create_notification_for_user_followers_on_photo_creation
 
 UserModel = get_user_model()
 
@@ -112,4 +112,5 @@ class PhotoCreateView(LoginRequiredMixin, views.CreateView):
             photo = form.save(commit=False)
             photo.owner = self.request.user
             photo.save()
+            create_notification_for_user_followers_on_photo_creation(photo)
             return redirect('photo home')
