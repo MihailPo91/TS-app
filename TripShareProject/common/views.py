@@ -5,12 +5,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.views import generic as views
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from pyperclip import copy
 
+from TripShareProject import settings
 from TripShareProject.accounts.notifications import create_notification_for_new_follow_on_user
-from TripShareProject.common.forms import CommentForm, RatingForm
+from TripShareProject.common.forms import CommentForm, RatingForm, ContactForm
 from TripShareProject.common.models import Like, Rating, Notification
 from TripShareProject.common.notifications import create_notification_for_like_on_user_photo, \
     create_notification_for_comment_on_user_photo
@@ -41,6 +43,7 @@ class ShowHomepageAsGuest(views.View):
         else:
             context = {
                 'all_photos': all_photos,
+                'random_photo': random_photo
             }
 
         return render(request, 'common/homepage.html', context=context)
@@ -153,16 +156,31 @@ def add_rating(request, pk):
         return render(request, 'common/add-rating.html', context=context)
 
 
-def mark_notification_read(request, pk):
-    notification = Notification.objects.get(pk=pk)
-    if not notification.is_read:
-        notification.is_read = True
-        notification.save()
-
-    return redirect(request.META['HTTP_REFERER'] + f'#{notification.id}')
-
-
 def delete_notification(request, pk):
     notification = Notification.objects.get(pk=pk)
     notification.delete()
     return redirect(request.META['HTTP_REFERER'])
+
+
+def successful_message_sent(request):
+    return render(request, 'contact/message_sent.html')
+
+
+def show_contacts_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['text']
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email_from, ]
+            send_mail(subject, message, email_from, recipient_list)
+            return redirect('success sent')
+
+    else:
+        form = ContactForm()
+
+        context = {'form': form}
+
+        return render(request, 'contact/contact.html', context=context)

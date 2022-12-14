@@ -33,15 +33,14 @@
     <div>
         <img src="{{ photo.photo.url }}" alt="img" style="margin-left:50px; width: 900px; height: 600px" loading="lazy" id="{{ photo.id }}">
     </div>
-    <div style="padding-left: 50px; padding-top: 10px">
+    <div style="padding-left: 50px; padding-top: 10px" id="likes">
         <p style="font-size: 30px">{% if request.user.id not in likes %}
             <a href="{% url 'like' photo.id %}"><img src="/static/images/like.png" alt="like_btn"
                                                      width="50" height="50"></a>
         {% else %}
             <a href="{% url 'like' photo.id %}"><img src="/static/images/dislike.png" alt="like_btn"
                                                      width="50" height="50"></a>
-        {% endif %} Likes: <strong>{{ photo.like_set.count }}</strong> &nbsp;&nbsp; <a href="{% url 'share' photo.pk %}"><img src="{% static '/images/share.png' %}" alt="share" width="40"
-                                                                 height="40"></a>
+        {% endif %} Likes: <strong>{{ photo.like_set.count }}</strong> &nbsp;&nbsp; <a href="{% url 'share' photo.pk %}" style="text-decoration: none; font-size: 30px">share</a>
             <br>
     </div>
     <div style="margin-left: 50px; font-size: 30px">

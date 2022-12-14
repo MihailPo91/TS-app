@@ -20,7 +20,7 @@
             <a class="active" href="{% url 'login' %}">Login</a>
             <a class="active" href="{% url 'register' %}">Register</a>
         {% else %}
-            <a class="active" href="{% url 'notifications' request.user.pk %}"><img src="{% static 'images/notification.png' %}" alt="bell" height="20">{% if request.user.sent_to > 0 %}{{ request.user.sent_to.count }}{% endif %}</a>
+            <a class="active" href="{% url 'notifications' request.user.pk %}"><img src="{% static 'images/notification.png' %}" alt="bell" height="20">{% if request.user.sent_to.count > 0 %}{{ request.user.sent_to.count }}{% endif %}</a>
             <a class="active" href="{% url 'profile details' request.user.pk %}">
                 {% if request.user.profile_picture %}<img src="{{ request.user.profile_picture.url }}"
                                                           alt="prof_img"
@@ -40,7 +40,7 @@
             <a href="{% url 'photo home' %}">Photos</a>
             <a href="{% url 'landmark home' %}">Landmarks</a>
             <a href="{% url 'about' %}">About</a>
-            <a href="{% url 'about' %}">Contact</a>
+            <a href="{% url 'contact' %}">Contact</a>
         {% endif %}
     </div>
 </div>
@@ -64,7 +64,7 @@
             <ul class="f-menu">
                 <li><a href="">Back to top</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="">Contacts</a></li>
+                <li><a href="{% url 'contact' %}">Contacts</a></li>
             </ul>
         </div>
     </div>

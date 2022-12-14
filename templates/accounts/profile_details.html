@@ -105,29 +105,19 @@
         {% if request.user == object %}
             <div class="row">
                 <div class="col-sm-12">
-                    <a
-                            style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile gallery' object.pk %}"><img src="{% static 'images/gallery.png' %}"
-                                                                              alt="gallery" height="100"></a>
+                    <a href="{% url 'profile gallery' object.pk %}" style="text-decoration: none; font-size: 40px"><strong>Gallery</strong></a>
 
-                    <a
-                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile edit' object.pk %}"><img src="{% static 'images/edit.png' %}"
-                                                                           alt="edit" height="100"></a>
+                    <a href="{% url 'profile edit' object.pk %}"><img src="{% static 'images/edit.png' %}"
+                                                                           alt="edit" height="40"></a>
 
-                    <a
-                            style="font-size: 42px; padding: 10px; text-decoration: none; color: red; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile delete' object.pk %}"><img src="{% static 'images/delete.png' %}"
-                                                                             alt="delete" height="100"></a>
+                    <a href="{% url 'profile delete' object.pk %}"><img src="{% static 'images/delete.png' %}"
+                                                                             alt="delete" height="40"></a>
                 </div>
             </div>
         {% endif %}
         {% if request.user in object.followed_by.all %}
             <div class="col-sm-12">
-                 <a
-                            style="font-size: 42px; padding: 10px; text-decoration: none; color: blue; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"
-                            href="{% url 'profile gallery' object.pk %}"><img src="{% static 'images/gallery.png' %}"
-                                                                              alt="gallery" height="200"></a>
+                  <a href="{% url 'profile gallery' object.pk %}" style="text-decoration: none; font-size: 40px"><strong>Gallery</strong></a>
             </div>
         {% endif %}
         {% if request.user != object %}

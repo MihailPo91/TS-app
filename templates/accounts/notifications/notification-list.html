@@ -12,8 +12,7 @@
 
                     <div style="padding: 10px; font-size: 30px; border-style: groove; border-width: 1px; width: 100%; background-color: beige"
                          id="notification">
-                        <div><a href="{{ notification.link }}" style="text-decoration: none"><img src="{% static 'images/visit.png' %}" alt="visit" height="55"></a>
-                            <a href="{% url 'mark read' notification.pk %}"><img src="{% static 'images/accept.png' %}" alt="accept" height="40"></a>
+                        <div><a href="{{ notification.link }}" style="text-decoration: none"><img src="{% static 'images/search.png' %}" alt="visit" height="55"></a>
                             <a href="{% url 'delete notification' notification.pk %}"><img src="{% static 'images/delete.png' %}" alt="delete" height="40"></a>&nbsp;
                             <i>{{ notification.date_time_created }}</i>
                             <p><strong>{{ notification.message }}</strong></p>

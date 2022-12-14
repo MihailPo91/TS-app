@@ -25,3 +25,7 @@ class RatingForm(forms.ModelForm):
             'rows': 5
         })}
 
+
+class ContactForm(forms.Form):
+    subject = forms.CharField()
+    text = forms.CharField(widget=forms.Textarea)
