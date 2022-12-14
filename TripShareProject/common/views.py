@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.views import generic as views
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
+from pyperclip import copy
 
 from TripShareProject.common.forms import CommentForm, RatingForm
 from TripShareProject.common.models import Like, Rating
@@ -90,13 +91,20 @@ def tag_user_to_landmark(request, pk):
     current_user = get_object_or_404(UserModel, username=request.user.username)
     try:
         is_visited = current_user.visits.get(pk=pk)
-    except Exception:
+        if is_visited:
+            current_user.visits.remove(landmark.id)
+    except ObjectDoesNotExist:
         current_user.visits.add(landmark.id)
 
-    else:
-        current_user.visits.remove(landmark.id)
-
     return redirect(request.META['HTTP_REFERER'] + '#tag')
+
+
+@login_required
+def copy_link_to_clipboard(request, pk):
+    photo = Photo.objects.get(pk=pk)
+    copy(request.META['HTTP_HOST'] + resolve_url('photo details', pk))
+
+    return redirect(request.META['HTTP_REFERER'] + f'#{photo.id}')
 
 
 def about_page_view(request):

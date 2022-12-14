@@ -1,9 +1,10 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="main card" style="padding: 30px">
         <h1>{{ landmark.name }} {% if perms.landmarks.change_landmark %}
-            <a href="{% url 'landmark edit' landmark.pk %}"><img src="/static/images/edit.png" alt="edit" width="50"
+            <a href="{% url 'landmark edit' landmark.pk %}"><img src="{% static '/images/edit.png' %}" alt="edit" width="50"
                                                                  height="50"></a>{% endif %}</h1>
         <small>{{ landmark.date_time_added }}</small>
         <br><br><br>

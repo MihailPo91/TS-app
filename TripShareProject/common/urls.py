@@ -1,7 +1,7 @@
 from django.urls import path
 
 from TripShareProject.common.views import ShowHomepageAsGuest, add_comment, like_view, follow_view, \
-    tag_user_to_landmark, about_page_view, add_rating
+    tag_user_to_landmark, about_page_view, add_rating, copy_link_to_clipboard
 
 urlpatterns = [
     path('', ShowHomepageAsGuest.as_view(), name='home'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('follow/<int:pk>/', follow_view, name='follow'),
     path('tag/<int:pk>/', tag_user_to_landmark, name='tag'),
     path('rate/<int:pk>/', add_rating, name='add rating'),
+    path('share/<int:pk>/', copy_link_to_clipboard, name='share'),
     path('about/', about_page_view, name='about')
 ]
