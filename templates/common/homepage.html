@@ -80,7 +80,7 @@
 
     <div>
         {% if not random_photo %}
-            <img src="/static/images/IMG_20210516_105905.jpg" alt="img2" height="1200" width="1600"
+            <img src="{% static '/images/IMG_20210516_105905.jpg' %}" alt="img2" height="1200" width="1600"
                  style="padding: 30px; margin-left: 60px">
         {% else %}
             <img src="{{ random_photo.photo.url }}" alt="rand_img" height="1200" width="1600" style="padding: 30px; margin-left: 60px">

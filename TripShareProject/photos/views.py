@@ -78,11 +78,21 @@ class PictureEditView(LoginRequiredMixin, views.UpdateView):
     form_class = PhotoEditForm
     template_name = 'photos/photo-edit.html'
 
+    def get_queryset(self):
+        queryset = super(PictureEditView, self).get_queryset()
+        queryset = queryset.filter(owner_id=self.request.user.id)
+        return queryset
+
 
 class PictureDeleteView(LoginRequiredMixin, views.DeleteView):
     model = Photo
     template_name = 'photos/photo-delete.html'
     success_url = reverse_lazy('photo home')
+
+    def get_queryset(self):
+        queryset = super(PictureDeleteView, self).get_queryset()
+        queryset = queryset.filter(id=self.request.user.id)
+        return queryset
 
 
 # @login_required

@@ -7,9 +7,9 @@
             {% csrf_token %}
             {{ search_form.query }}
             <button>
-                <img src="/static/images/search.png" height="30" alt="search">
+                <img src="{% static '/images/search.png' %}" height="30" alt="search">
             </button>
-            <a href="{% url 'landmark home' %}"><img src="/static/images/reload.png" alt="reload" height="30"></a>
+            <a href="{% url 'landmark home' %}"><img src="{% static '/images/reload.png' %}" alt="reload" height="30"></a>
         </form>
     </div>
     {% if landmark_list %}
@@ -34,7 +34,7 @@
             {% for landmark in landmark_list %}
                 <div style="padding: 20px; display: inline-block; width: 45%; border-style: groove; border-width: 1px">
                     <div class="landmark container">
-                        <a href="{{ landmark.location }}"
+                        <a href="{% url 'landmark details' landmark.pk %}"
                            style="text-decoration: none; color: black">
                             <h2 style="padding: 10px; text-align: center; font-size: 50px">{{ landmark.name }}</h2></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
                             href="{% url 'landmark details' landmark.pk %}"><img src="{{ landmark.main_photo.url }}"

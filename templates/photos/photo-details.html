@@ -7,15 +7,15 @@
         <div style="padding: 50px">
             <a href="{% url 'photo add' %}" style="text-decoration: none;
             color: crimson; font-size: 60px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"><strong><img
-                    src="/static/images/add.png" alt="add" width="100" height="100"></strong></a>
+                    src="{% static '/images/add.png' %}" alt="add" width="100" height="100"></strong></a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% url 'photo edit' photo.pk %}" style="text-decoration: none;
             color: crimson; font-size: 60px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"><strong><img
-                    src="/static/images/edit.png" alt="edit" width="100" height="100"></strong></a>
+                    src="{% static '/images/edit.png' %}" alt="edit" width="100" height="100"></strong></a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% url 'photo delete' photo.pk %}" style="text-decoration: none;
             color: crimson; font-size: 60px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"><strong><img
-                    src="/static/images/delete.png" alt="delete" width="100" height="100"></strong></a>
+                    src="{% static '/images/delete.png' %}" alt="delete" width="100" height="100"></strong></a>
         </div>
     {% endif %}
     <div style="padding: 50px">
@@ -24,7 +24,7 @@
                 {% if photo.owner.profile_picture %}
                     <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="45" height="35">
                 {% else %}
-                    <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="45" height="35">
+                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="45" height="35">
                 {% endif %}
                 <strong style="font-size: 40px; color: crimson">{{ photo.owner.username }}</strong></p></a>
 
@@ -35,10 +35,10 @@
     </div>
     <div style="padding-left: 50px; padding-top: 10px" id="likes">
         <p style="font-size: 30px">{% if request.user.id not in likes %}
-            <a href="{% url 'like' photo.id %}"><img src="/static/images/like.png" alt="like_btn"
+            <a href="{% url 'like' photo.id %}"><img src="{% static '/images/like.png' %}" alt="like_btn"
                                                      width="50" height="50"></a>
         {% else %}
-            <a href="{% url 'like' photo.id %}"><img src="/static/images/dislike.png" alt="like_btn"
+            <a href="{% url 'like' photo.id %}"><img src="{% static '/images/dislike.png' %}" alt="like_btn"
                                                      width="50" height="50"></a>
         {% endif %} Likes: <strong>{{ photo.like_set.count }}</strong> &nbsp;&nbsp; <a href="{% url 'share' photo.pk %}" style="text-decoration: none; font-size: 30px">share</a>
             <br>
@@ -62,7 +62,7 @@
                     {% if comment.user.profile_picture %}
                         <img src="{{ comment.user.profile_picture.url }}" alt="prof_img" width="40" height="40">
                     {% else %}
-                        <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="40" height="40">
+                        <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="40" height="40">
                     {% endif %}
                     <strong style="font-size: 40px">{{ comment.user.username }}</strong></a>&nbsp;&nbsp;&nbsp;<i
                     style="font-size: 30px">{{ comment.text }}</i><br>

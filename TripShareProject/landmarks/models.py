@@ -1,6 +1,9 @@
 from cloudinary.models import CloudinaryField
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
 from django.urls import reverse
+
+from TripShareProject.accounts.validators import contains_only_letters_validator
 
 
 class Landmark(models.Model):
@@ -9,6 +12,7 @@ class Landmark(models.Model):
         max_length=50,
         blank=False,
         null=False,
+        validators=[contains_only_letters_validator, ]
     )
     main_photo = CloudinaryField(
         'image',
@@ -27,6 +31,7 @@ class Landmark(models.Model):
     description = models.TextField(
         null=False,
         blank=False,
+        validators=[MinLengthValidator(100), MaxLengthValidator(10000)]
     )
 
     date_time_added = models.DateTimeField(auto_now_add=True)

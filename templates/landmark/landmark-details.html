@@ -63,7 +63,7 @@
                         <p>{% if rating.user.profile_picture %}
                             <img src="{{ rating.user.profile_picture.url }}" alt="prof_img" width="35" height="35">
                         {% else %}
-                            <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="35" height="35">
+                            <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="35" height="35">
                         {% endif %}
                             <i><a href="{% url 'profile details' rating.user.pk %}"
                                   style="text-decoration: none; font-size: 30px; color: crimson">{{ rating.user }}</a></i>&nbsp;&nbsp;&nbsp;<strong
@@ -88,13 +88,13 @@
     {% if landmark.photo_set.count > 0 %}
         <div>
             <p style="font-size: 40px; padding: 30px"><strong>Gallery:</strong><a href="{% url 'photo add' %}"><img
-                    src="/static/images/add.png" alt="add" height="50"></a></p>
+                    src="{% static '/images/add.png' %}" alt="add" height="50"></a></p>
             {% for photo in landmark.photo_set.all %}
                 <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="l-img"
                                                                   style="height: 450px; width: 550px; padding: 20px"></a>
             {% endfor %}
         </div>
     {% else %}
-        <a href="{% url 'photo add' %}"><img src="/static/images/add.png" alt="add" height="50"></a>
+        <a href="{% url 'photo add' %}"><img src="{% static '/images/add.png' %}" alt="add" height="50"></a>
     {% endif %}
 {% endblock %}

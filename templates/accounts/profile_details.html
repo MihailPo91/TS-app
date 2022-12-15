@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
                         {% if not object.profile_picture %}
-                            <img src="/static/images/default_profile_pic.jpg" alt="Admin"
+                            <img src="{% static '/images/default_profile_pic.jpg' %}" alt="Admin"
                                  class="rounded-circle" width="150">
                         {% else %}
                             <img src="{{ object.profile_picture.url }}" alt="Admin"
@@ -105,19 +105,20 @@
         {% if request.user == object %}
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{% url 'profile gallery' object.pk %}" style="text-decoration: none; font-size: 40px"><strong>Gallery</strong></a>
+                    <a href="{% url 'profile gallery' object.pk %}"
+                       style="text-decoration: none; font-size: 40px"><strong>Gallery</strong></a>
 
                     <a href="{% url 'profile edit' object.pk %}"><img src="{% static 'images/edit.png' %}"
-                                                                           alt="edit" height="40"></a>
+                                                                      alt="edit" height="40"></a>
 
                     <a href="{% url 'profile delete' object.pk %}"><img src="{% static 'images/delete.png' %}"
-                                                                             alt="delete" height="40"></a>
+                                                                        alt="delete" height="40"></a>
                 </div>
             </div>
         {% endif %}
         {% if request.user in object.followed_by.all %}
             <div class="col-sm-12">
-                  <a href="{% url 'profile gallery' object.pk %}" style="text-decoration: none; font-size: 40px"><strong>Gallery</strong></a>
+                <a href="{% url 'profile gallery' object.pk %}" style="text-decoration: none; font-size: 40px"><strong>Gallery</strong></a>
             </div>
         {% endif %}
         {% if request.user != object %}
@@ -142,10 +143,6 @@
         <br>
 
         </div>
-    </div>
-
-
-
     </div>
 
 {% endblock %}

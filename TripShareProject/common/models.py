@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, MaxLengthValidator
 from django.db import models
 
 from TripShareProject.landmarks.models import Landmark
@@ -15,7 +15,8 @@ class Comment(models.Model):
     text = models.TextField(
         null=False,
         blank=False,
-        default=''
+        default='',
+        validators=[MaxLengthValidator(2555, message='The maximum comment characters is 255')]
     )
     date_time_of_publication = models.DateTimeField(
         auto_now_add=True,)

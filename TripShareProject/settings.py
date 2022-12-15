@@ -15,6 +15,7 @@ import json
 
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
 
@@ -39,15 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 
+    # 'cloudinary_storage',
+    'django.contrib.staticfiles',
 
     'TripShareProject.accounts',
     'TripShareProject.common',
     'TripShareProject.photos',
     'TripShareProject.landmarks',
 
-    'cloudinary'
+    'cloudinary',
+
 ]
 
 MIDDLEWARE = [
@@ -131,7 +134,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 
 EMAIL_BACKEND = os.environ['EMAIL_BACKEND']
 EMAIL_HOST = os.environ['EMAIL_HOST']
@@ -159,6 +164,12 @@ cloudinary.config(
     api_key=os.environ['CLOUDINARY_API_KEY'],
     api_secret=os.environ['CLOUDINARY_API_SECRET'],
 )
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ['CLOUDINARY_CLOUD_NAME'],
+#     'API_KEY': os.environ['CLOUDINARY_API_KEY'],
+#     'API_SECRET': os.environ['CLOUDINARY_API_SECRET']
+# }
 
 import cloudinary.uploader
 import cloudinary.api

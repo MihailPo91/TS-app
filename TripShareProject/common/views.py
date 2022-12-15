@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.mail import send_mail
 from django.views import generic as views
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
@@ -156,8 +156,11 @@ def add_rating(request, pk):
         return render(request, 'common/add-rating.html', context=context)
 
 
+@login_required
 def delete_notification(request, pk):
     notification = Notification.objects.get(pk=pk)
+    if request.user not in notification.receiver:
+        raise PermissionDenied('Please do not try that!')
     notification.delete()
     return redirect(request.META['HTTP_REFERER'])
 

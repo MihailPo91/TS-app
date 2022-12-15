@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet"
-          href="/static/css/all_style.css">
+          href="{% static '/css/all_style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trip Share</title>
 
@@ -27,7 +27,7 @@
                                                           height="15"
                                                           width="15"
                                                           style="padding-right: 1px">{{ request.user }}
-                {% else %}<img src="/static/images/default_profile_pic.jpg"
+                {% else %}<img src="{% static '/images/default_profile_pic.jpg' %}"
                                alt="prof_img"
                                height="15"
                                width="15"

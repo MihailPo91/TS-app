@@ -11,7 +11,7 @@
 
         <a href="{% url 'photo add' %}" style="text-decoration: none;
         color: crimson; font-size: 60px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"><img
-                src="/static/images/add.png" alt="add" height="100"></a>
+                src="{% static '/images/add.png' %}" alt="add" height="100"></a>
     </div>
 
     <div style="padding-left: 50px">
@@ -27,7 +27,7 @@
                 {% if photo.owner.profile_picture %}
                     <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="40" height="40">
                 {% else %}
-                    <img src="/static/images/default_profile_pic.jpg" alt="prof_img" width="40" height="40">
+                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="40" height="40">
                 {% endif %}
                 <strong style="font-size: 40px">{{ photo.owner.username }}</strong></a>
             <strong style="padding-left: 200px; font-size: 40px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">{{ photo.location }}</strong>
@@ -40,10 +40,10 @@
                                                               id="{{ photo.id }}" loading="lazy"></a>
             <br><br>
             <p style="font-size: 30px">{% if photo.id not in all_liked_photos_by_request_user %}
-                <a href="{% url 'like' photo.id %}"><img src="/static/images/like.png" alt="like_btn"
+                <a href="{% url 'like' photo.id %}"><img src="{% static '/images/like.png' %}" alt="like_btn"
                                                          width="50" height="50"></a>
             {% else %}
-                <a href="{% url 'like' photo.id %}"><img src="/static/images/dislike.png" alt="like_btn"
+                <a href="{% url 'like' photo.id %}"><img src="{% static '/images/dislike.png' %}" alt="like_btn"
                                                          width="50" height="50"></a>
             {% endif %} Likes:{{ photo.like_set.count }} &nbsp;&nbsp; <a href="{% url 'share' photo.pk %}" style="text-decoration: none; font-size: 30px">share</a>
                 <br>
@@ -58,7 +58,7 @@
                                     <img src="{{ comment.user.profile_picture.url }}" alt="prof_img" width="40"
                                          height="40">
                                 {% else %}
-                                    <img src="/static/images/default_profile_pic.jpg" alt="prof_img"
+                                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img"
                                          width="40"
                                          height="40">
                                 {% endif %}
