@@ -5,7 +5,6 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.decorators.cache import cache_page
 
 from TripShareProject.common.forms import CommentForm
 from TripShareProject.photos.forms import PhotoCreateForm, PhotoEditForm
@@ -73,24 +72,24 @@ class PhotoDetailsView(LoginRequiredMixin, views.DetailView):
         return context
 
 
-class PictureEditView(LoginRequiredMixin, views.UpdateView):
+class PhotoEditView(LoginRequiredMixin, views.UpdateView):
     model = Photo
     form_class = PhotoEditForm
     template_name = 'photos/photo-edit.html'
 
     def get_queryset(self):
-        queryset = super(PictureEditView, self).get_queryset()
+        queryset = super(PhotoEditView, self).get_queryset()
         queryset = queryset.filter(owner_id=self.request.user.id)
         return queryset
 
 
-class PictureDeleteView(LoginRequiredMixin, views.DeleteView):
+class PhotoDeleteView(LoginRequiredMixin, views.DeleteView):
     model = Photo
     template_name = 'photos/photo-delete.html'
     success_url = reverse_lazy('photo home')
 
     def get_queryset(self):
-        queryset = super(PictureDeleteView, self).get_queryset()
+        queryset = super(PhotoDeleteView, self).get_queryset()
         queryset = queryset.filter(id=self.request.user.id)
         return queryset
 

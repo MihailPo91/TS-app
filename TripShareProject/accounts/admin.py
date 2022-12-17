@@ -26,3 +26,4 @@ class TripShareUserAdmin(admin.ModelAdmin):
         ),
         ("Additional info", {"fields": ("last_login", "date_joined")}),
     )
+    list_filter = ['is_superuser', 'groups', ]

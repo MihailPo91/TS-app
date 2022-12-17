@@ -20,11 +20,11 @@
     {% endif %}
     <div style="padding: 50px">
         <a href="{% url 'profile details' photo.owner.pk %}" style="text-decoration: none; color: crimson">
-            <p style="font-size: 40px; color: black"><strong>Posted by:</strong>
+            <p style="font-size: 40px; color: black"><strong><img src="{% static 'images/new_logo.png' %}" alt="logo" height="40" style="border-radius: 50%">Posted by:</strong>
                 {% if photo.owner.profile_picture %}
-                    <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="45" height="35">
+                    <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="45" height="35" style="border-radius: 50%">
                 {% else %}
-                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="45" height="35">
+                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="45" height="35" style="border-radius: 50%">
                 {% endif %}
                 <strong style="font-size: 40px; color: crimson">{{ photo.owner.username }}</strong></p></a>
 
@@ -40,7 +40,8 @@
         {% else %}
             <a href="{% url 'like' photo.id %}"><img src="{% static '/images/dislike.png' %}" alt="like_btn"
                                                      width="50" height="50"></a>
-        {% endif %} Likes: <strong>{{ photo.like_set.count }}</strong> &nbsp;&nbsp; <a href="{% url 'share' photo.pk %}" style="text-decoration: none; font-size: 30px">share</a>
+        {% endif %} <strong>Likes:</strong> <i>{{ photo.like_set.count }}</i> &nbsp;&nbsp; <a href="{% url 'share' photo.pk %}" style="text-decoration: none; font-size: 30px"><img
+                    src="{% static 'images/share.png' %}" alt="share" height="40"></a>
             <br>
     </div>
     <div style="margin-left: 50px; font-size: 30px">
@@ -60,9 +61,9 @@
             <div style="font-size: 20px; padding: 5px">
                 <a href="{% url 'profile details' comment.user.pk %}" style="text-decoration: none; color: crimson">
                     {% if comment.user.profile_picture %}
-                        <img src="{{ comment.user.profile_picture.url }}" alt="prof_img" width="40" height="40">
+                        <img src="{{ comment.user.profile_picture.url }}" alt="prof_img" width="40" height="40" style="border-radius: 50%">
                     {% else %}
-                        <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="40" height="40">
+                        <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="40" height="40" style="border-radius: 50%">
                     {% endif %}
                     <strong style="font-size: 40px">{{ comment.user.username }}</strong></a>&nbsp;&nbsp;&nbsp;<i
                     style="font-size: 30px">{{ comment.text }}</i><br>

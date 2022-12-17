@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
-from TripShareProject.accounts.validators import contains_only_letters_validator
+from TripShareProject.accounts.validators import contains_only_letters_and_whitespace_validator
 from TripShareProject.landmarks.models import Landmark
 
 UserModel = get_user_model()
@@ -24,7 +24,7 @@ class Photo(models.Model):
         null=True,
         blank=True,
         default='Bulgaria',
-        validators=[contains_only_letters_validator, ]
+        validators=[contains_only_letters_and_whitespace_validator, ]
     )
     description = models.CharField(
         max_length=300,

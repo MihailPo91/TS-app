@@ -33,6 +33,7 @@
         <div style="padding-left: 100px">
             {% for landmark in landmark_list %}
                 <div style="padding: 20px; display: inline-block; width: 45%; border-style: groove; border-width: 1px">
+                    <img src="{% static 'images/new_logo.png' %}" alt="logo" height="80" style="position: absolute; border-radius: 50%">
                     <div class="landmark container">
                         <a href="{% url 'landmark details' landmark.pk %}"
                            style="text-decoration: none; color: black">

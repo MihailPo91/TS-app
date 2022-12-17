@@ -12,13 +12,15 @@
         <div class="picture-holder" style="padding-left: 350px" id="photo-post">
             <a href="{% url 'profile details' photo.owner.pk %}"
                style="text-decoration: none; color: crimson">
+
+
                 {% if photo.owner.profile_picture %}
-                    <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="40" height="40">
+                    <img src="{{ photo.owner.profile_picture.url }}" alt="prof_img" width="40" height="40" style="border-radius: 50%">
                 {% else %}
-                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="40" height="40">
+                    <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img" width="40" height="40" style="border-radius: 50%">
                 {% endif %}
                 <strong style="font-size: 40px">{{ photo.owner.username }}</strong></a>
-            <strong style="padding-left: 200px; font-size: 40px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace">{{ photo.location }}</strong>
+            <strong style="padding-left: 200px; font-size: 40px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace"><img src="{% static 'images/new_logo.png' %}" alt="logo" height="40" style="border-radius: 50%">{{ photo.location }}</strong>
 
             <p style="padding-top: 20px; padding-bottom: 20px"><i>{{ photo.date_time_of_publication }}</i>
             </p>
@@ -44,11 +46,11 @@
                                style="text-decoration: none; color: crimson">
                                 {% if comment.user.profile_picture %}
                                     <img src="{{ comment.user.profile_picture.url }}" alt="prof_img" width="40"
-                                         height="40">
+                                         height="40" style="border-radius: 50%">
                                 {% else %}
                                     <img src="{% static '/images/default_profile_pic.jpg' %}" alt="prof_img"
                                          width="40"
-                                         height="40">
+                                         height="40" style="border-radius: 50%">
                                 {% endif %}
                                 <strong style="font-size: 40px">{{ comment.user.username }}</strong></a> {{ comment.text }}
                             <p style="font-size: 12px">{{ comment.date_time_of_publication }}</p>

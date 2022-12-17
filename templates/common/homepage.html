@@ -4,7 +4,6 @@
 
 {% block content %}
     <div style="background-image: url('/static/images/background.jpg')">
-
         <a href="{% url 'about' %}" style="text-decoration: none"><h1 style="font-size: 200px; float: top; margin: 50px; margin-left: 300px; font-weight: 800;
         color: black;
         font-family: ' Bitstream Vera Sans Mono', Monaco, 'Courier New', Courier, monospace;">
@@ -17,7 +16,19 @@
         color: crimson;">S</span>HARE </h1></a>
 
     </div>
-
+    <div style="font-size: 30px; text-align: center; width: 100%; text-emphasis: #555555; padding: 90px ">
+    {% if not request.user.is_authenticated %}
+    <div>
+        <p><img src="{% static 'images/new_logo.png' %}" alt="logo" height="50">TripShare is a social media application that lets you share your memories and photos with your followers and other travellers. Get started now! If you don't have an account
+            <a href="{% url 'register' %}" style="text-decoration: none">REGISTER</a> one right away. If you already did that, then what are you waiting for??
+            <a href="{% url 'login' %}" style="text-decoration: none">LOG IN</a> and enjoy the endless travel content that we have for you!</p>
+    </div>
+    {% else %}
+    <div>
+        <p><img src="{% static 'images/new_logo.png' %}" alt="logo" height="50">TripShare is a social media application that lets you share your memories and photos with your followers and other travellers. But you already know this since you are registered and ready to share. Don't waste your time reading this. Start exploring!</p>
+    </div>
+    {% endif %}
+    </div>
     <div>
         <img src="{% static '/images/IMG_20210704_185959.jpg' %}" alt="img2" height="1200" width="1600"
              style="padding: 30px; margin-left: 60px">

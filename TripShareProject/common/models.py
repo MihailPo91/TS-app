@@ -16,7 +16,7 @@ class Comment(models.Model):
         null=False,
         blank=False,
         default='',
-        validators=[MaxLengthValidator(2555, message='The maximum comment characters is 255')]
+        validators=[MaxLengthValidator(255, message='The maximum comment characters is 255')]
     )
     date_time_of_publication = models.DateTimeField(
         auto_now_add=True,)
