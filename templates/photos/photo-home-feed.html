@@ -38,7 +38,7 @@
             </p>
 
             <a href="{% url 'photo details' photo.pk %}"><img src="{{ photo.photo.url }}" alt="img3"
-                                                              style="height: 700px; width: 1000px; border-style: groove; border-color: black"
+                                                              style="height: 65%; width: 80%; border-style: groove; border-color: black"
                                                               id="{{ photo.id }}" loading="lazy"></a>
             <br><br>
             <p style="font-size: 30px">{% if photo.id not in all_liked_photos_by_request_user %}

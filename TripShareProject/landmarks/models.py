@@ -18,6 +18,7 @@ class Landmark(models.Model):
         'image',
         null=False,
         blank=False,
+        # Scaling for performance with cloudinary
         transformation=[
             {'width': 1600, 'crop': "scale"},
             {'fetch_format': "auto"}

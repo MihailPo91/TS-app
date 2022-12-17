@@ -30,10 +30,12 @@ class ShowHomepageAsGuest(views.View):
     def get(request):
         all_photos = Photo.objects.all().order_by('-date_time_of_publication')[:8]
         profile = request.user
+        # probably not necessary but if broke few times, so I prefer it handled
         try:
             random_photo = random.choice(Photo.objects.all())
         except ObjectDoesNotExist:
             random_photo = None
+        # TODO Clean this later, it's obsolete
         if profile.id:
             context = {
                 'all_photos': all_photos,
@@ -74,6 +76,8 @@ def like_view(request, photo_id):
     else:
         like = Like(to_photo=photo, user=request.user)
         like.save()
+        # we create notification on every like, can be a bit spammy and can brake the site
+        # TODO handle this notification with a signal and check for recent similar like to avoid overload
         create_notification_for_like_on_user_photo(like)
 
     return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')
@@ -85,11 +89,13 @@ def follow_view(request, pk):
     current_user = get_object_or_404(UserModel, username=request.user.username)
     following = current_user.follows.all()
 
+    # we cannot follow ourselves!
     if user_to_follow != current_user:
         if user_to_follow in following:
             current_user.follows.remove(user_to_follow.id)
         else:
             current_user.follows.add(user_to_follow.id)
+            # TODO again this can make overload; put some kind of a timeout here
             create_notification_for_new_follow_on_user(user_to_follow, current_user)
 
     return redirect('profile details', pk)
@@ -99,6 +105,7 @@ def follow_view(request, pk):
 def tag_user_to_landmark(request, pk):
     landmark = Landmark.objects.get(pk=pk)
     current_user = get_object_or_404(UserModel, username=request.user.username)
+    # try except is to keep template loading, it brakes otherwise
     try:
         is_visited = current_user.visits.get(pk=pk)
         if is_visited:
@@ -125,8 +132,12 @@ def about_page_view(request):
 def add_rating(request, pk):
     landmark = Landmark.objects.get(pk=pk)
     already_rated = Rating.objects.filter(user=request.user, landmark=landmark).last()
+
+    # we handle first posted rating and edit rating here 2 in 1, which is bad and has to be fixed
+    # TODO separate this view into 2 views with 2 separate tasks
     if request.method == 'POST':
 
+        # this is the edit part
         if already_rated:
             form = RatingForm(request.POST)
             Rating.objects.get(user=request.user, landmark=landmark).delete()
@@ -137,6 +148,8 @@ def add_rating(request, pk):
                 rating.save()
 
                 return redirect('landmark details', landmark.pk)
+
+        # here is the creation part
         form = RatingForm(request.POST)
         if form.is_valid():
             rating = form.save(commit=False)
@@ -145,6 +158,9 @@ def add_rating(request, pk):
             rating.save()
 
             return redirect('landmark details', landmark.pk)
+
+    # that's for GET and my god its ugly
+    # TODO I promise I will fix this ASAP
     else:
         if already_rated:
             form = RatingForm(initial=already_rated.__dict__)
@@ -159,6 +175,7 @@ def add_rating(request, pk):
 @login_required
 def delete_notification(request, pk):
     notification = Notification.objects.get(pk=pk)
+    # security check here, we should not be deleting and reading other people's notifications
     if request.user not in notification.receiver.all():
         raise PermissionDenied('Please do not try that!')
     notification.delete()
@@ -174,6 +191,7 @@ def show_contacts_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
 
+            # the contact form is anonymous therefore no email is needed from user
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['text']
             email_from = settings.EMAIL_HOST_USER

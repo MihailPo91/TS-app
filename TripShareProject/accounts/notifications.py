@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.urls import reverse, reverse_lazy
+
 
 from TripShareProject.common.models import Notification
-from TripShareProject.photos.models import Photo
+
 
 UserModel = get_user_model()
 

@@ -38,6 +38,7 @@ class TripShareUser(AbstractUser):
         'image',
         null=True,
         blank=True,
+        # this is crucial for performance! we downscale the image size via cloudinary
         transformation=[
             {'width': 1200, 'crop': "scale"},
             {'fetch_format': "auto"}

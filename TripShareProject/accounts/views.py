@@ -64,12 +64,16 @@ class ShowProfileDetailsView(LoginRequiredMixin, views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # gather total likes, total visited landmarks and all posted photos by the user
         total_likes = sum([photo.like_set.count() for photo in self.object.owned_by.all()])
-        context['total_likes'] = total_likes
         visited = [landmark for landmark in self.object.visits.all()]
         all_posted_photos = Photo.objects.filter(owner__exact=self.object.id)
-        context['all_photos'] = all_posted_photos
+
+        # pass everything to the context dictionary
+        context['total_likes'] = total_likes
         context['visited'] = visited
+        context['all_photos'] = all_posted_photos
 
         return context
 
@@ -81,11 +85,13 @@ class UserEditView(LoginRequiredMixin, views.UpdateView):
 
     def get_queryset(self):
 
+        # queryset here is for security - returns only user's content and if it doesn't match - throws 404
         queryset = super(UserEditView, self).get_queryset()
         queryset = queryset.filter(id=self.request.user.id)
         return queryset
 
     def get_success_url(self):
+        # we use method here since we pass an argument and its easier this way
         return reverse_lazy('profile details', kwargs={'pk': self.object.pk})
 
 
@@ -95,6 +101,7 @@ class UserDeleteView(LoginRequiredMixin, views.DeleteView):
     template_name = 'accounts/profile-delete.html'
 
     def get_queryset(self):
+        # queryset for security reasons here also
         queryset = super(UserDeleteView, self).get_queryset()
         queryset = queryset.filter(id=self.request.user.id)
         return queryset
@@ -104,8 +111,10 @@ class UserDeleteView(LoginRequiredMixin, views.DeleteView):
 @login_required
 def show_user_photo_gallery(request, pk):
     user = UserModel.objects.get(pk=pk)
+    # we check if user tries to force the url without permissions, and we throw 403 if that's the case
     if request.user.pk != user.pk and request.user not in user.followed_by.all():
         raise PermissionDenied('Please do not try that!')
+    # try / except to ensure if user has no photos it won't throw 500
     try:
         user_photos = Photo.objects.filter(owner=user)
     except AttributeError:
@@ -132,6 +141,7 @@ def show_user_followers_list(request, pk):
 @login_required
 def show_user_followed_users(request, pk):
     user = UserModel.objects.get(pk=pk)
+    # we check if user tries to force the url without permissions, and we throw 403 if that's the case
     if request.user.pk != user.pk and user not in request.user.follows.all():
         raise PermissionDenied('Please do not try that!')
     user_follows = user.follows.all()
@@ -143,8 +153,10 @@ def show_user_followed_users(request, pk):
 @login_required
 def show_user_notifications(request, pk):
     user = UserModel.objects.get(pk=pk)
+    # we check if user tries to force the url without permissions, and we throw 403 if that's the case
     if request.user.pk != user.pk:
         raise PermissionDenied('Please do not try that!')
+    # we retrieve notifications for given user here, no need to try/except, because it's handled via a template
     notifications = Notification.objects.filter(receiver=user).order_by('-date_time_created')
 
     context = {'notifications': notifications}

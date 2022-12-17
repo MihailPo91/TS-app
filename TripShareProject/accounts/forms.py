@@ -23,6 +23,7 @@ class TripUserEditForm(forms.ModelForm):
     class Meta:
         model = UserModel
         fields = ('first_name', 'last_name', 'age', 'email', 'profile_picture', 'bio')
+        # no need to define explicitly exclude, but I like it that way, makes it visible
         exclude = ('password',)
         labels = {
             'username': 'Username:',
