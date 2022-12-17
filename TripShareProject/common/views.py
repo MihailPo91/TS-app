@@ -159,7 +159,7 @@ def add_rating(request, pk):
 @login_required
 def delete_notification(request, pk):
     notification = Notification.objects.get(pk=pk)
-    if request.user not in notification.receiver:
+    if request.user not in notification.receiver.all():
         raise PermissionDenied('Please do not try that!')
     notification.delete()
     return redirect(request.META['HTTP_REFERER'])
